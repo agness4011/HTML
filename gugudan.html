@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>구구단 계산기</title>
+</head>
+<body>
+    <h1>구구단 계산기</h1>
+    <p>구구단을 계산할 숫자를 입력하세요:</p>
+    <input type="number" id="number" placeholder="숫자 입력">
+    <button onclick="calculate()">계산하기</button>
+
+    <h2>구구단 결과:</h2>
+    <div id="result"></div>
+
+    <script>
+        function calculate() {
+            // 입력값 가져오기
+            var num = document.getElementById("number").value;
+            num = parseInt(num);
+
+            // 결과를 저장할 변수
+            var result = "";
+
+            // 숫자가 올바른지 체크
+            if (isNaN(num) || num < 1 || num > 9) {
+                alert("1부터 9 사이의 숫자를 입력하세요.");
+                return;
+            }
+
+            // 구구단 계산
+            for (var i = 1; i <= 9; i++) {
+                result += num + " x " + i + " = " + (num * i) + "<br>";
+            }
+
+            // 결과 출력
+            document.getElementById("result").innerHTML = result;
+        }
+    </script>
+</body>
+</html>
