@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>메모 앱</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    textarea {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      font-size: 16px;
+      resize: none;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .memo {
+      background: white;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-left: 5px solid #4CAF50;
+      position: relative;
+    }
+
+    .delete {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      color: red;
+      cursor: pointer;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📒 간단한 메모 앱</h1>
+
+  <textarea id="memoInput" placeholder="메모를 입력하세요..."></textarea>
+  <button onclick="addMemo()">메모 저장</button>
+
+  <div id="memoList"></div>
+
+  <script>
+    // 저장된 메모 불러오기
+    window.onload = function () {
+      loadMemos();
+    };
+
+    function addMemo() {
+      const memoText = document.getElementById("memoInput").value.trim();
+      if (memoText === "") return;
+
+      const memos = JSON.parse(localStorage.getItem("memos") || "[]");
+      memos.push(memoText);
+      localStorage.setItem("memos", JSON.stringify(memos));
+
+      document.getElementById("memoInput").value = "";
+      loadMemos();
+    }
+
+    function loadMemos() {
+      const memoList = document.getElementById("memoList");
+      memoList.innerHTML = "";
+
+      const memos = JSON.parse(localStorage.getItem("memos") || "[]");
+
+      memos.forEach((memo, index) => {
+        const memoDiv = document.createElement("div");
+        memoDiv.className = "memo";
+        memoDiv.innerHTML = `
+          ${memo}
+          <span class="delete" onclick="deleteMemo(${index})">삭제</span>
+        `;
+        memoList.appendChild(memoDiv);
+      });
+    }
+
+    function deleteMemo(index) {
+      const memos = JSON.parse(localStorage.getItem("memos") || "[]");
+      memos.splice(index, 1);
+      localStorage.setItem("memos", JSON.stringify(memos));
+      loadMemos();
+    }
+  </script>
+
+</body>
+</html>
