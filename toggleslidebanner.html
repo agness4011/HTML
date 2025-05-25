@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Toggle Slide Banner</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background: #f0f0f0;
+    }
+
+    /* 슬라이드 배너 */
+    .slide-banner {
+      position: fixed;
+      top: -100px;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(to right, #ff416c, #ff4b2b);
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      font-size: 18px;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: top 0.5s ease;
+      z-index: 1000;
+    }
+
+    .slide-banner.show {
+      top: 0;
+    }
+
+    .trigger {
+      margin: 150px auto;
+      display: block;
+      padding: 12px 24px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .trigger:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="trigger" onclick="toggleBanner()">Toggle Banner</button>
+
+  <div class="slide-banner" id="banner">
+    🚨 Important Update: Please check your dashboard now!
+  </div>
+
+  <script>
+    function toggleBanner() {
+      const banner = document.getElementById('banner');
+      banner.classList.toggle('show');
+    }
+  </script>
+
+</body>
+</html>
