@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dark/Light Theme Toggle</title>
+  <style>
+    /* CSS 변수로 테마 색상 정의 */
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #222222;
+      --accent-color: #007bff;
+      --toggle-bg: #e0e0e0;
+    }
+    /* 다크 모드용 변수 덮어쓰기 */
+    [data-theme="dark"] {
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --accent-color: #66aaff;
+      --toggle-bg: #333333;
+    }
+
+    /* 변수 적용 */
+    body {
+      margin: 0;
+      padding: 2rem;
+      font-family: Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    h1 {
+      margin-bottom: 1rem;
+    }
+
+    a {
+      color: var(--accent-color);
+    }
+
+    /* 토글 버튼 스타일 */
+    .theme-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background-color: var(--toggle-bg);
+      border: none;
+      border-radius: 50%;
+      width: 2.5rem;
+      height: 2.5rem;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .theme-toggle:focus {
+      outline: 2px solid var(--accent-color);
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">🌙</button>
+
+  <h1>Welcome!</h1>
+  <p>이 페이지는 다크 모드와 라이트 모드를 토글할 수 있습니다.</p>
+  <p>테마를 바꿔보세요! <a href="#">예시 링크</a></p>
+
+  <script>
+    const toggleBtn = document.getElementById('themeToggle');
+    const root = document.documentElement;
+
+    
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+
+    root.setAttribute('data-theme', initialTheme);
+    toggleBtn.textContent = initialTheme === 'dark' ? '☀️' : '🌙';
+
+    // 버튼 클릭 시 토글 & 저장
+    toggleBtn.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      toggleBtn.textContent = next === 'dark' ? '☀️' : '🌙';
+    });
+  </script>
+</body>
+</html>
